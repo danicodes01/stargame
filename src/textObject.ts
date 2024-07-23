@@ -4,8 +4,8 @@ export class TextObject {
     text: string;
     color: string;
     size: number;
-    duration: number; // Duration for how long the text should be displayed
-    createdAt: number; // Timestamp when the text was created
+    duration: number;
+    createdAt: number; 
   
     constructor(x: number, y: number, text: string, color: string, size: number, duration: number) {
       this.x = x;

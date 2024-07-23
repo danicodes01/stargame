@@ -1,5 +1,6 @@
 import { Drawable } from "./drawable.js";
 
+
 export class Star implements Drawable {
   x: number;
   y: number;
@@ -11,12 +12,7 @@ export class Star implements Drawable {
     this.z = Math.random() * maxDepth;
   }
 
-  update(
-    canvasWidth: number,
-    canvasHeight: number,
-    maxDepth: number,
-    speed: number
-  ) {
+  update(canvasWidth: number, canvasHeight: number, maxDepth: number, speed: number) {
     this.z -= speed;
     if (this.z <= 0) {
       this.z = maxDepth;
@@ -25,13 +21,7 @@ export class Star implements Drawable {
     }
   }
 
-  draw(
-    ctx: CanvasRenderingContext2D,
-    canvasWidth: number,
-    canvasHeight: number,
-    sizeFactor: number,
-    color: string
-  ) {
+  draw(ctx: CanvasRenderingContext2D, canvasWidth: number, canvasHeight: number, sizeFactor: number, color: string) {
     let x = (this.x - canvasWidth / 2) * (canvasWidth / this.z) + canvasWidth / 2;
     let y = (this.y - canvasHeight / 2) * (canvasWidth / this.z) + canvasHeight / 2;
     let size = sizeFactor * canvasWidth / this.z;
