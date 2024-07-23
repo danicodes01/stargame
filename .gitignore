@@ -1,0 +1,4 @@
+pnpm-lock.yaml
+dist/
+notes.js 
+node_modules
