@@ -20,6 +20,9 @@ export class Starfield {
   crosshair: { x: number; y: number };
   keysPressed: { [key: string]: boolean } = {};
 
+  laserSound: HTMLAudioElement;
+  explosionSound: HTMLAudioElement;
+
   constructor(
     canvas: HTMLCanvasElement,
     starNum: number,
@@ -46,6 +49,14 @@ export class Starfield {
     this.ufoChance = ufoChance;
     this.maxDepth = maxDepth;
     this.crosshair = { x: canvas.width / 2, y: canvas.height / 2 };
+
+    // Initialize audio elements with error handling
+    this.laserSound = new Audio('./assets/sounds/laser.wav');
+    this.laserSound.addEventListener('error', (e) => console.error('Error loading laser sound', e));
+
+    this.explosionSound = new Audio('./assets/sounds/explosion.wav');
+    this.explosionSound.addEventListener('error', (e) => console.error('Error loading explosion sound', e));
+
     this.resizeCanvas();
     window.addEventListener("resize", this.resizeCanvas.bind(this));
     this.initStars();
@@ -153,6 +164,9 @@ export class Starfield {
   }
 
   shoot() {
+    console.log("Shooting!");
+    this.laserSound.currentTime = 0; // Reset sound to start
+    this.laserSound.play().catch((e) => console.error('Error playing laser sound', e));
     for (let i = 0; i < this.stars.length; i++) {
       const star = this.stars[i];
       if (star instanceof UFO) {
@@ -168,6 +182,8 @@ export class Starfield {
           Math.abs(x - this.crosshair.x) < size &&
           Math.abs(y - this.crosshair.y) < size
         ) {
+          this.explosionSound.currentTime = 0; // Reset sound to start
+          this.explosionSound.play().catch((e) => console.error('Error playing explosion sound', e));
           this.stars[i] = new TextObject(x, y, "😻 +100", "white", 20, 2000);
         }
       }
